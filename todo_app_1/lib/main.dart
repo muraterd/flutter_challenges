@@ -24,31 +24,43 @@ class IndexScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          new Title(
-            text: 'My day',
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 15),
-            child: new ToDoList(
-              todoList: [
-                ToDoItemModel(text: 'Deneme', isCompleted: false),
-                ToDoItemModel(text: 'Deneme22', isCompleted: true),
-              ],
-              label: ToDoLabel(
-                text: 'TO DO',
-                bgColor: Color(0xFFFF5DB2),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 15),
-            child: new ToDoList(
-              todoList: [ToDoItemModel(text: 'Deneme2', isCompleted: true)],
-              label: ToDoLabel(
-                text: 'PLACE TO GO',
-                bgColor: Color(0xFF1BCDAB),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  new Title(
+                    text: 'My day',
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 15),
+                    child: new ToDoList(
+                      todoList: [
+                        ToDoItemModel(text: 'Deneme', isCompleted: false),
+                        ToDoItemModel(text: 'Deneme22', isCompleted: true),
+                      ],
+                      label: ToDoLabel(
+                        text: 'TO DO',
+                        bgColor: Color(0xFFFF5DB2),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 15),
+                    child: new ToDoList(
+                      todoList: [
+                        ToDoItemModel(text: 'Deneme2', isCompleted: true)
+                      ],
+                      label: ToDoLabel(
+                        text: 'PLACE TO GO',
+                        bgColor: Color(0xFF1BCDAB),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -103,23 +115,26 @@ class ToDoList extends StatelessWidget {
                   )
                 ],
               ),
-              ListView(
-                  padding: EdgeInsets.all(0),
-                  shrinkWrap: true,
-                  children: todoList
-                      ?.map((item) => ToDoItem(
-                            model: item,
-                          ))
-                      ?.toList()
-                  // children: <Widget>[
-                  //   todoList.map((item) => ToDoItem()).toList();
-                  //   // new ToDoItem(),
-                  //   // Text('ses'),
-                  //   // Text('ses'),
-                  //   // Text('ses'),
-                  //   // Text('ses'),
-                  // ],
-                  )
+              TextField(
+                decoration: InputDecoration(
+                  hintText: 'What to do next?',
+                  border: new OutlineInputBorder(
+                    borderSide: new BorderSide(
+                      color: Colors.pink,
+                    ),
+                  ),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.pink,
+                      width: 2.0,
+                    ),
+                  ),
+                ),
+              ),
+              for (var item in todoList)
+                ToDoItem(
+                  model: item,
+                )
             ],
           ),
         ),
