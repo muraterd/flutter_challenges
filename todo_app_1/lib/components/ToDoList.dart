@@ -68,6 +68,7 @@ class ToDoList extends StatelessWidget {
               ),
               for (var item in todoList)
                 ToDoItem(
+                  activeColor: color,
                   model: item,
                 )
             ],
