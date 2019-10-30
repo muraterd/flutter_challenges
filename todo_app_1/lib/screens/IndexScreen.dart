@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:todo_app/assets/Styles.dart';
-import 'package:todo_app/components/ToDoLabel.dart';
 import 'package:todo_app/components/ToDoList.dart';
 import 'package:todo_app/models/ToDoItemModel.dart';
+import 'package:todo_app/stores/AppStore.dart';
 
 class IndexScreen extends StatelessWidget {
   @override
@@ -15,19 +16,31 @@ class IndexScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  new Title(
-                    text: 'My day',
+                  Observer(
+                    builder: (_) {
+                      return new Title(
+                        text: appStoreInstance.tasks.length.toString(),
+                      );
+                    },
+                  ),
+                  RaisedButton(
+                    child: Text('Test'),
+                    onPressed: () {
+                      // appStoreInstance.changeName('name');
+                      // appStoreInstance.setAsCompleted();
+                      appStoreInstance.tasks.add(
+                          ToDoItemModel(text: 'Deneme', isCompleted: true));
+                    },
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16.0, vertical: 15),
-                    child: new ToDoList(
-                      todoList: [
-                        ToDoItemModel(text: 'Deneme', isCompleted: false),
-                        ToDoItemModel(text: 'Deneme22', isCompleted: true),
-                      ],
-                      title: 'TO DO',
-                      color: Color(0xFFFF5DB2),
+                    child: Observer(
+                      builder: (_) => new ToDoList(
+                        todoList: appStoreInstance.tasks,
+                        title: 'TO DO',
+                        color: Color(0xFFFF5DB2),
+                      ),
                     ),
                   ),
                   Padding(
