@@ -17,6 +17,20 @@ class Styles {
     letterSpacing: 1,
   );
 
+  static const MovieDetailHeaderTitle = TextStyle(
+    color: Palette.Text,
+    fontWeight: FontWeight.w800,
+    fontSize: 22,
+    letterSpacing: 1,
+  );
+
+  static const SectionTitle = TextStyle(
+    color: Palette.Text,
+    fontWeight: FontWeight.w700,
+    fontSize: 20,
+    letterSpacing: 1,
+  );
+
   static const SilencedText = TextStyle(
     color: Palette.SilencedText,
     fontWeight: FontWeight.w600,
