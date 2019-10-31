@@ -9,4 +9,18 @@ class Styles {
     letterSpacing: 2,
     fontStyle: FontStyle.italic,
   );
+
+  static const MovieListTitle = TextStyle(
+    color: Palette.Text,
+    fontWeight: FontWeight.w800,
+    fontSize: 15,
+    letterSpacing: 1,
+  );
+
+  static const SilencedText = TextStyle(
+    color: Palette.SilencedText,
+    fontWeight: FontWeight.w600,
+    fontSize: 15,
+    letterSpacing: 1,
+  );
 }

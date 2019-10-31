@@ -4,7 +4,7 @@ import 'package:movie_app/assets/Styles.dart';
 class MainAppBar extends AppBar {
   MainAppBar()
       : super(
-          elevation: 0,
+          // elevation: 0,
           centerTitle: false,
           actions: <Widget>[
             IconButton(

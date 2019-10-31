@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
         ),
         canvasColor: Colors.white,
         appBarTheme: AppBarTheme(
+          elevation: 0,
           brightness: Brightness.light,
           color: Colors.white,
           iconTheme: IconThemeData(
