@@ -1,42 +1,46 @@
-import 'package:mobx/mobx.dart';
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_observable_state/flutter_observable_state.dart';
 import 'package:todo_app/models/ToDoItemModel.dart';
 
-// Include generated file
-part 'AppStore.g.dart';
+const ListColors = [Color(0xFFFF5DB2), Color(0xFF1BCDAB)];
 
-class AppStore = _AppStore with _$AppStore;
+Color getRandomColor() {
+  return ListColors[Random().nextInt(ListColors.length)];
+}
 
-abstract class _AppStore with Store {
-  @observable
-  String appName = 'Test22';
+class AppStore {
+  List<TaskListStore> lists = [];
 
-  @observable
-  ObservableList<ToDoItemModel> tasks = ObservableList<ToDoItemModel>();
-
-  _AppStore() {
-    tasks.add(ToDoItemModel(text: 'Mobx Test', isCompleted: false));
-  }
-
-  @action
-  void setAsCompleted() {
-    // tasks[0].isCompleted = true;
-    for (var task in tasks) {
-      task.isCompleted = true;
-    }
-  }
-
-  @action
-  void changeName(String name) {
-    appName = name;
+  AppStore() {
+    lists.add(new TaskListStore('TO DO'));
+    lists.add(new TaskListStore('PLACE TO GO'));
   }
 }
 
-final appStoreInstance = new AppStore();
+class TaskListStore {
+  var name = Observable('');
+  var tasks = Observable(List<ToDoItemModel>());
+  Color color = getRandomColor();
 
-// Source Code Generate
-// flutter packages pub run build_runner watch --delete-conflicting-outputs
+  TaskListStore(String name) {
+    this.name.set(name);
 
-// Observing the value
-// Observer(
-//   builder: (_) => Title(text: appStoreInstance.appName),
-// )
+    this.tasks.get().add(new ToDoItemModel(text: 'Test22', isCompleted: true));
+  }
+
+  addTask(ToDoItemModel task) {
+    this.tasks.change((tasks) {
+      tasks.add(task);
+      return tasks;
+    });
+  }
+
+  changeStatus(int index, bool newStatus) {
+    this.tasks.change((tasks) {
+      tasks[index].isCompleted = newStatus;
+      return tasks;
+    });
+  }
+}

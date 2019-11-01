@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_observable_state/flutter_observable_state.dart';
 import 'package:todo_app/assets/Styles.dart';
 import 'package:todo_app/components/ToDoList.dart';
-import 'package:todo_app/models/ToDoItemModel.dart';
 import 'package:todo_app/stores/AppStore.dart';
+
+final appStore = new AppStore();
 
 class IndexScreen extends StatelessWidget {
   @override
@@ -16,44 +17,16 @@ class IndexScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Observer(
-                    builder: (_) {
-                      return new Title(
-                        text: appStoreInstance.tasks.length.toString(),
-                      );
-                    },
+                  Title(
+                    text: 'My Day',
                   ),
-                  RaisedButton(
-                    child: Text('Test'),
-                    onPressed: () {
-                      // appStoreInstance.changeName('name');
-                      // appStoreInstance.setAsCompleted();
-                      appStoreInstance.tasks.add(
-                          ToDoItemModel(text: 'Deneme', isCompleted: true));
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 15),
-                    child: Observer(
-                      builder: (_) => new ToDoList(
-                        todoList: appStoreInstance.tasks,
-                        title: 'TO DO',
-                        color: Color(0xFFFF5DB2),
-                      ),
+                  for (var i = 0; i < appStore.lists.length; i++)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 15),
+                      child: observe(
+                          () => new ToDoList(taskListStore: appStore.lists[i])),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 15),
-                    child: new ToDoList(
-                      todoList: [
-                        ToDoItemModel(text: 'Deneme2', isCompleted: true)
-                      ],
-                      title: 'PLACE TO GO',
-                      color: Color(0xFF1BCDAB),
-                    ),
-                  ),
                 ],
               ),
             ),

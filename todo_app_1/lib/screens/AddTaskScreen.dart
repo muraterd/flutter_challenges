@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:todo_app/assets/Styles.dart';
 import 'package:todo_app/components/ToDoLabel.dart';
+import 'package:todo_app/models/ToDoItemModel.dart';
+import 'package:todo_app/stores/AppStore.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  AddTaskScreen({this.title, this.color});
+  AddTaskScreen({this.title, this.color, @required this.taskListStore});
 
   final String title;
   final Color color;
+  final TaskListStore taskListStore;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +63,10 @@ class AddTaskScreen extends StatelessWidget {
                   textColor: Colors.white,
                   color: Color(0xFF282A37),
                   child: Text('Add'),
-                  onPressed: () {},
+                  onPressed: () {
+                    taskListStore
+                        .addTask(new ToDoItemModel(text: 'Deneme 1-2'));
+                  },
                 ),
               ),
             ],

@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_observable_state/flutter_observable_state.dart';
 import 'package:todo_app/assets/Colors.dart';
 import 'package:todo_app/assets/Styles.dart';
 import 'package:todo_app/components/ToDoItem.dart';
 import 'package:todo_app/components/ToDoLabel.dart';
-import 'package:todo_app/models/ToDoItemModel.dart';
 import 'package:todo_app/Istanbay.dart' as IstanbayUI;
 import 'package:todo_app/screens/AddTaskScreen.dart';
+import 'package:todo_app/stores/AppStore.dart';
 
 class ToDoList extends StatelessWidget {
-  const ToDoList(
-      {Key key,
-      this.todoList = const [],
-      this.color = Palette.Title,
-      this.title})
-      : super(key: key);
+  const ToDoList({Key key, @required this.taskListStore}) : super(key: key);
 
-  final List<ToDoItemModel> todoList;
-  final Color color;
-  final String title;
+  final TaskListStore taskListStore;
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +51,9 @@ class ToDoList extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => AddTaskScreen(
-                                    title: title,
-                                    color: color,
+                                    title: taskListStore.name.get(),
+                                    color: taskListStore.color,
+                                    taskListStore: taskListStore,
                                   )),
                         );
                       },
@@ -66,21 +61,24 @@ class ToDoList extends StatelessWidget {
                   )
                 ],
               ),
-              for (var item in todoList)
-                ToDoItem(
-                  activeColor: color,
-                  model: item,
-                )
+              for (var i = 0; i < taskListStore.tasks.get().length; i++)
+                observe(() => ToDoItem(
+                      activeColor: taskListStore.color,
+                      model: taskListStore.tasks.get()[i],
+                      onChanged: (isCompleted) {
+                        taskListStore.changeStatus(i, isCompleted);
+                      },
+                    ))
             ],
           ),
         ),
         Positioned(
           top: -10,
           left: 10,
-          child: ToDoLabel(
-            text: title ?? '',
-            bgColor: color,
-          ),
+          child: observe(() => ToDoLabel(
+                text: taskListStore.name.get() ?? '',
+                bgColor: taskListStore.color,
+              )),
         )
       ],
     );
