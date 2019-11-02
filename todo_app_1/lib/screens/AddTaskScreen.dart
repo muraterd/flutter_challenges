@@ -11,6 +11,7 @@ class AddTaskScreen extends StatelessWidget {
   final String title;
   final Color color;
   final TaskListStore taskListStore;
+  final textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +45,7 @@ class AddTaskScreen extends StatelessWidget {
                 height: 40,
               ),
               TextField(
+                controller: textEditingController,
                 keyboardType: TextInputType.multiline,
                 maxLines: 5,
                 decoration: InputDecoration(
@@ -64,8 +66,9 @@ class AddTaskScreen extends StatelessWidget {
                   color: Color(0xFF282A37),
                   child: Text('Add'),
                   onPressed: () {
-                    taskListStore
-                        .addTask(new ToDoItemModel(text: 'Deneme 1-2'));
+                    taskListStore.addTask(
+                        new ToDoItemModel(text: textEditingController.text));
+                    Navigator.pop(context);
                   },
                 ),
               ),

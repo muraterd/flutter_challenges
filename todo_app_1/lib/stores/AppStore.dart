@@ -43,4 +43,11 @@ class TaskListStore {
       return tasks;
     });
   }
+
+  removeTask(int index) {
+    this.tasks.change((tasks) {
+      tasks.removeAt(index);
+      return tasks;
+    });
+  }
 }

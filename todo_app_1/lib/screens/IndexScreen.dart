@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_observable_state/flutter_observable_state.dart';
 import 'package:todo_app/assets/Styles.dart';
 import 'package:todo_app/components/ToDoList.dart';
 import 'package:todo_app/stores/AppStore.dart';
@@ -24,8 +23,7 @@ class IndexScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16.0, vertical: 15),
-                      child: observe(
-                          () => new ToDoList(taskListStore: appStore.lists[i])),
+                      child: ToDoList(taskListStore: appStore.lists[i]),
                     ),
                 ],
               ),
